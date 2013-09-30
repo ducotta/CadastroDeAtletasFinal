@@ -13,9 +13,14 @@ public class PremiacaoTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		umaPremiacao = new Premiacao("umTitulo", 2013);
+		umaPremiacao = new Premiacao("Rally", "umTitulo", 2013);
 	}
 
+	@Test 
+	public void testCategoria(){
+		assertEquals("Rally", umaPremiacao.getCategoria());
+	}
+	
 	@Test
 	public void testTistulo(){
 	
