@@ -13,7 +13,7 @@ public class PremiacaoTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		umaPremiacao = new Premiacao("Rally", "umTitulo", 2013);
+		umaPremiacao = new Premiacao("Rally", "1 lugar no Rally dos Sertões", 2013);
 	}
 
 	@Test 
@@ -24,7 +24,7 @@ public class PremiacaoTest {
 	@Test
 	public void testTistulo(){
 	
-		assertEquals("umTitulo", umaPremiacao.getTitulo());
+		assertEquals("1 lugar no Rally dos Sertões", umaPremiacao.getTitulo());
 	}
 	
 	@Test
@@ -34,7 +34,7 @@ public class PremiacaoTest {
 	
 	@Test
 	public void testToString(){
-		assertEquals("2013 - umTitulo",umaPremiacao.toString());
+		assertEquals("2013 - Rally - 1 lugar no Rally dos Sertões",umaPremiacao.toString());
 	}
 
 }

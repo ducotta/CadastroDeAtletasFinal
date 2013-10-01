@@ -37,7 +37,7 @@ public class Premiacao {
 	
 	@Override
 	public String toString(){
-		return this.ano + " - " + this.titulo;
+		return this.ano + " - " + this.categoria + " - " + this.titulo;
 	}
 	
 	
