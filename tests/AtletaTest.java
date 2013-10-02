@@ -6,10 +6,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import controleDeAtletas.Atleta;
+import controleDeAtletas.Endereco;
 
 public class AtletaTest {
 	
 	Atleta umAtleta;
+	private Endereco endereco;
 
 	@Before
 	public void setUp() throws Exception {
@@ -32,6 +34,13 @@ public class AtletaTest {
 	public void testDataDeNasimento(){
 		umAtleta.setDataDeNascimento("16/12/1992");
 		assertEquals("16/12/1992", umAtleta.getDataDeNascimento());
+	}
+	
+	@Test
+	public void testEndereco(){
+		endereco = new Endereco();
+		umAtleta.setEndereco(endereco);
+		assertEquals(endereco, umAtleta.getEndereco());
 	}
 	
 	@Test
