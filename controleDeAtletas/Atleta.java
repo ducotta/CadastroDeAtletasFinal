@@ -4,6 +4,7 @@ public class Atleta {
 	
 	
 	private String nome;
+	private char sexo;
 	private String dataDeNascimento;
 	private Endereco endereco;
 	private String telefone;
@@ -11,15 +12,17 @@ public class Atleta {
 	private Double peso;
 	private String nomeMae;
 	private String nomePai;
-	private char sexo;
 	private String rg;
 	private String cpf;
 	
 	public Atleta(String nome){
 		this.nome = nome;
-		this.endereco = new Endereco("-", "-", "-", "-", "-", "-", "-", "-");
-		
+		this.endereco = new Endereco();
+
 	}
+	
+
+	
 	
 	public String getNome() {
 		return nome;
@@ -29,6 +32,14 @@ public class Atleta {
 		this.nome = nome;
 	}
 
+	public char getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(char sexo) {
+		this.sexo = sexo;
+	}
+	
 	public String getDataDeNascimento() {
 		return dataDeNascimento;
 	}
@@ -85,13 +96,7 @@ public class Atleta {
 		this.nomePai = nomePai;
 	}
 
-	public char getSexo() {
-		return sexo;
-	}
-
-	public void setSexo(char sexo) {
-		this.sexo = sexo;
-	}
+	
 
 	public String getRg() {
 		return rg;
@@ -108,6 +113,8 @@ public class Atleta {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
+
+	
 	
 	
 	
