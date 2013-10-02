@@ -9,61 +9,64 @@ import controleDeAtletas.Endereco;
 
 public class EnderecoTest {
 
+	Endereco umEndereco;
+	
 	@Before
 	public void setUp() throws Exception {
+		umEndereco = new Endereco();
 	}
 
 	@Test
 	public void testLogradouro() {
 		
-		Endereco umEndereco = new Endereco("logradouro", null, null, null, null, null, null, null );
-		assertEquals("logradouro", umEndereco.getLogradouro());
+		umEndereco.setLogradouro("Rua Augusta");
+		assertEquals("Rua Augusta", umEndereco.getLogradouro());
 				
 	}
 	
 	@Test
 	public void testNumero(){
 		
-		Endereco umEndereco = new Endereco(null, "numero", null, null, null, null, null, null);
-		assertEquals("numero", umEndereco.getNumero());
+		umEndereco.setNumero("umNumero");
+		assertEquals("umNumero", umEndereco.getNumero());
 		
 	}
 	
 	@Test
 	public void testBairo(){
-		Endereco umEndereco = new Endereco(null, null, "bairro", null, null, null, null, null);
-		assertEquals("bairro", umEndereco.getBairro());
+		umEndereco.setBairro("umBairro");
+		assertEquals("umBairro", umEndereco.getBairro());
 		
 	}
 	
 	@Test
 	public void testCidade(){
-		Endereco umEndereco = new Endereco(null, null, null, "cidade", null, null, null, null);
+		umEndereco.setCidade("cidade");
 		assertEquals("cidade", umEndereco.getCidade());
 		
 	}
 	
 	@Test
 	public void testEstado(){
-		Endereco umEndereco = new Endereco(null, null, null, null, "estado", null, null, null);
+		umEndereco.setEstado("estado");
 		assertEquals("estado", umEndereco.getEstado());
 	}
 	
 	@Test
 	public void testPais(){
-		Endereco umEndereco = new Endereco(null, null, null, null, null, "pais", null, null);
+		umEndereco.setPais("pais");
 		assertEquals("pais", umEndereco.getPais());
 	}
 	
 	@Test
 	public void testComplemento(){
-		Endereco umEndereco = new Endereco(null, null, null, null, null, null, "complemento", null);
+		umEndereco.setComplemento("complemento");
 		assertEquals("complemento", umEndereco.getComplemento());
 	}
 	
 	@Test
 	public void testCep(){
-		Endereco umEndereco = new Endereco(null, null, null, null, null, null, null, "cep");
+		umEndereco.setCep("cep");
 		assertEquals("cep", umEndereco.getCep());
 	}
 	
