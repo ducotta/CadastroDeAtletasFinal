@@ -6,10 +6,11 @@ public class PilotoAutomotivo extends Atleta {
 	
 	private String categoriaPiloto; // J=Junior N=Novato G=Graduado P=Proficional
 	private String categoriaCorrida;
-	private String licenca;
+	private String tipoDeLicenca;
 	private int anosDeExperiencia;
 	private ArrayList<Historico> historico;
-	private ArrayList<Premiacao> preiacoes;
+	private ArrayList<Premiacao> premiacoes;
+	private int totalDeCorridas;
 	private int totalVitorias;
 	private int totalPolePositions;
 	private int totalVoltaDeMelhorTempo;
@@ -36,12 +37,12 @@ public class PilotoAutomotivo extends Atleta {
 		this.categoriaCorrida = categoriaCorrida;
 	}
 	
-	public String getLicenca() {
-		return licenca;
+	public String getTipoDeLicenca() {
+		return tipoDeLicenca;
 	}
 	
-	public void setLicenca(String licenca) {
-		this.licenca = licenca;
+	public void setTipoDeLicenca(String tipoDeLicenca) {
+		this.tipoDeLicenca = tipoDeLicenca;
 	}
 	
 	public int getAnosDeExperiencia() {
@@ -60,12 +61,20 @@ public class PilotoAutomotivo extends Atleta {
 		this.historico = historico;
 	}
 	
-	public ArrayList<Premiacao> getPreiacoes() {
-		return preiacoes;
+	public ArrayList<Premiacao> getPremiacoes() {
+		return premiacoes;
 	}
 	
-	public void setPreiacoes(ArrayList<Premiacao> preiacoes) {
-		this.preiacoes = preiacoes;
+	public void setPremiacoes(ArrayList<Premiacao> premiacoes) {
+		this.premiacoes = premiacoes;
+	}
+	
+	public int getTotalDeCorridas(){
+		return totalDeCorridas;
+	}
+	
+	public void setTotalDeCorridas(int totalDeCorridas){
+		this.totalDeCorridas = totalDeCorridas;
 	}
 	
 	public int getTotalVitorias() {
@@ -84,12 +93,12 @@ public class PilotoAutomotivo extends Atleta {
 		this.totalPolePositions = totalPolePositions;
 	}
 	
-	public int getTotalMelhorTempo() {
+	public int getTotalVoltasDeMelhorTempo() {
 		return totalVoltaDeMelhorTempo;
 	}
 	
-	public void setTotalMelhorTempo(int totalMelhorTempo) {
-		this.totalVoltaDeMelhorTempo = totalMelhorTempo;
+	public void setTotalVoltasDeMelhorTempo(int totalVoltasDeMelhorTempo) {
+		this.totalVoltaDeMelhorTempo = totalVoltasDeMelhorTempo;
 	}
 	
 	public int getTotalDeBatidas(){
