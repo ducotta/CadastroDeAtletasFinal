@@ -20,12 +20,12 @@ public class PilotoAutomotivo extends Atleta {
 		super(nome);
 	}
 	
-	public char getClasse(){
+	public char getCategoriaPiloto(){
 		return categoriaPiloto;
 	}
 	
-	public void setClasse(char classe){
-		this.categoriaPiloto = classe;
+	public void setCategoriaPiloto(char categoriaPiloto){
+		this.categoriaPiloto = categoriaPiloto;
 	}
 	
 	public String getCategoriaCorrida() {
