@@ -13,22 +13,22 @@ public class PremiacaoTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		umaPremiacao = new Premiacao("Profissional", "Rally", "1 lugar no Rally dos Sertões", 2013);
+		umaPremiacao = new Premiacao("Profissional", "Rally dos Sertoes", "Campeao", 2013);
 	}
 
-	@Test
+	@Test 
 	public void testCategoriaPiloto(){
 		assertEquals("Profissional", umaPremiacao.getCategoriaPiloto());
 	}
 	
 	@Test 
 	public void testCategoriaCorrida(){
-		assertEquals("Rally", umaPremiacao.getCategoriaCorrida());
+		assertEquals("Rally dos Sertoes", umaPremiacao.getCategoriaCorrida());
 	}
 	
 	@Test
 	public void testTistulo(){
-		assertEquals("1 lugar no Rally dos Sertões", umaPremiacao.getTitulo());
+		assertEquals("Campeao", umaPremiacao.getTitulo());
 	}
 	
 	@Test
@@ -38,7 +38,7 @@ public class PremiacaoTest {
 	
 	@Test
 	public void testToString(){
-		assertEquals("2013 - Profissional - Rally - 1 lugar no Rally dos Sertões",umaPremiacao.toString());
+		assertEquals("2013 - Campeao - Rally dos Sertoes - Profissional",umaPremiacao.toString());
 	}
 
 }
