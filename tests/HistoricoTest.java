@@ -13,22 +13,27 @@ public class HistoricoTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		umHistorico = new Historico("Nascar", "de 2010 a 2012");
+		umHistorico = new Historico("Profissional","Nascar", "2010-2012");
 	}
 
 	@Test
-	public void testCategoria() {
-		assertEquals("Nascar", umHistorico.getCategoria());
+	public void testCategoriaPiloto(){
+		assertEquals("Profissional", umHistorico.getCategoriaPiloto());
+	}
+	
+	@Test
+	public void testCategoriaCorrida() {
+		assertEquals("Nascar", umHistorico.getCategoriaCorrida());
 	}
 	
 	@Test 
 	public void testPeriodoDeParticipacao(){
-		assertEquals("de 2010 a 2012", umHistorico.getPeriodoDeParticipacao());
+		assertEquals("2010-2012", umHistorico.getPeriodoDeParticipacao());
 	}
 	
 	@Test
 	public void testToString(){
-		assertEquals("Correu na categoria Nascar de 2010 a 2012", umHistorico.toString());
+		assertEquals("Correu como Profissional na Nascar em 2010-2012", umHistorico.toString());
 	}
 
 }

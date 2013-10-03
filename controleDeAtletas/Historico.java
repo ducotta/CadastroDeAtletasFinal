@@ -2,19 +2,27 @@ package controleDeAtletas;
 
 public class Historico {
 	
-	private String categoria;
+	private String categoriaPiloto;
+	private String categoriaCorrida;
 	private String periodoDeParticipacao;
 	
-	public Historico(String categoria, String periodoDeParticipacao){
-		this.categoria = categoria;
+	public Historico(String categoriaPiloto, String categoriaCorrida, String periodoDeParticipacao){
+		this.categoriaPiloto = categoriaPiloto;
+		this.categoriaCorrida = categoriaCorrida;
 		this.periodoDeParticipacao = periodoDeParticipacao;
 	}
-	
-	public String getCategoria(){
-		return categoria;
+	public String getCategoriaPiloto(){
+		return categoriaPiloto;
 	}
-	public void setCategoria(String categoria){
-		this.categoria = categoria;
+	public void setCategoriaPiloto(String categoriaPiloto){
+		this.categoriaPiloto = categoriaPiloto;
+	}
+	
+	public String getCategoriaCorrida(){
+		return categoriaCorrida;
+	}
+	public void setCategoriaCorrida(String categoriaCorrida){
+		this.categoriaCorrida = categoriaCorrida;
 	}
 	
 	public String getPeriodoDeParticipacao(){
@@ -26,7 +34,7 @@ public class Historico {
 	
 	@Override
 	public String toString(){
-		return "Correu na categoria " + this.categoria + " " + this.periodoDeParticipacao;
+		return "Correu como " + this.categoriaPiloto + " na " + this.categoriaCorrida + " em " +  this.periodoDeParticipacao;
 	}
 
 }

@@ -2,22 +2,32 @@ package controleDeAtletas;
 
 public class Premiacao {
 	
-	private String categoria;
+	private String categoriaPiloto;
+	private String categoriaCorrida;
 	private String titulo;
 	private int ano;
 	
-	public Premiacao(String categoria, String titulo, int ano){
-		this.categoria = categoria;
+	public Premiacao(String categoriaPiloto, String categoriaCorrida, String titulo, int ano){
+		this.categoriaPiloto = categoriaPiloto;
+		this.categoriaCorrida = categoriaCorrida;
 		this.titulo = titulo;
 		this.ano = ano;
 	}
 	
-	public String getCategoria(){
-		return categoria;
+	public String getCategoriaPiloto(){
+		return categoriaPiloto;
 	}
 	
-	public void setCategoria(String categoria){
-		this.categoria = categoria;
+	public void setCategoriaPiloto(String categoriaPiloto){
+		this.categoriaPiloto = categoriaPiloto;
+	}
+	
+	public String getCategoriaCorrida(){
+		return categoriaCorrida;
+	}
+	
+	public void setCategoriaCorrida(String categoriaCorrida){
+		this.categoriaCorrida = categoriaCorrida;
 	}
 	
 	public String getTitulo(){
@@ -37,7 +47,7 @@ public class Premiacao {
 	
 	@Override
 	public String toString(){
-		return this.ano + " - " + this.categoria + " - " + this.titulo;
+		return this.ano + " - " + this.categoriaPiloto + " - " + this.categoriaCorrida + " - " + this.titulo;
 	}
 	
 	
