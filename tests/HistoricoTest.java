@@ -33,7 +33,7 @@ public class HistoricoTest {
 	
 	@Test
 	public void testToString(){
-		assertEquals("Correu como Profissional na Nascar em 2010-2012", umHistorico.toString());
+		assertEquals("Correu como Profissional na categoria Nascar em 2010-2012", umHistorico.toString());
 	}
 
 }

@@ -34,7 +34,7 @@ public class Historico {
 	
 	@Override
 	public String toString(){
-		return "Correu como " + this.categoriaPiloto + " na " + this.categoriaCorrida + " em " +  this.periodoDeParticipacao;
+		return "Correu como " + this.categoriaPiloto + " na categoria " + this.categoriaCorrida + " em " +  this.periodoDeParticipacao;
 	}
 
 }
