@@ -32,8 +32,6 @@ public class CadastroHistorico extends javax.swing.JDialog {
 
         jLabelCompeticao.setText("Competicao:");
 
-        jTextFieldCompeticao.setEditable(false);
-
         jLabelPeriodoDeParticipacao.setText("Periodo:");
 
         jLabelCategoriaPiloto.setText("Categoria do piloto:");

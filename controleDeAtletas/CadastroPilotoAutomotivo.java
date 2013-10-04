@@ -190,13 +190,7 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
                 return false;
             }
         }
-        try {
-            Double.parseDouble(jTextFieldTipoDeLicenca.getText());
-        } catch (Exception ex) {
-            this.exibirInformacao("O valor do campo 'Envergadura' é inválido.");
-            jTextFieldTipoDeLicenca.requestFocus();
-            return false;
-        }
+        
         try {
             Integer.parseInt(jTextFieldTotalDeBatidas.getText());
         } catch (Exception ex) {
@@ -1145,7 +1139,12 @@ private void jTextFieldDataNascimentoActionPerformed(java.awt.event.ActionEvent 
 }//GEN-LAST:event_jTextFieldDataNascimentoActionPerformed
 
     private void jButtonAdicionarHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarHistoricoActionPerformed
-        // TODO add your handling code here:
+        CadastroHistorico cadastro = new CadastroHistorico(this, true);
+    cadastro.setVisible(true);
+    if (cadastro.getHistorico() != null) {
+        historicoListModel.addElement(cadastro.getHistorico());
+    }
+    cadastro.dispose();
     }//GEN-LAST:event_jButtonAdicionarHistoricoActionPerformed
 
     private void jButtonRemoverHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverHistoricoActionPerformed
