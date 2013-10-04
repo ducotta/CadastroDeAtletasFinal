@@ -4,8 +4,7 @@ import java.util.ArrayList;
 
 public class PilotoAutomotivo extends Atleta {
 	
-	private String categoriaPiloto; // J=Junior N=Novato G=Graduado P=Proficional
-	private String categoriaCorrida;
+	private char categoriaPiloto; // J=Junior N=Novato G=Graduado A=Amador P=Proficional
 	private String tipoDeLicenca;
 	private int anosDeExperiencia;
 	private ArrayList<Historico> historico;
@@ -21,20 +20,12 @@ public class PilotoAutomotivo extends Atleta {
 		super(nome);
 	}
 	
-	public String getCategoriaPiloto(){
+	public char getCategoriaPiloto(){
 		return categoriaPiloto;
 	}
 	
-	public void setCategoriaPiloto(String categoriaPiloto){
+	public void setCategoriaPiloto(char categoriaPiloto){
 		this.categoriaPiloto = categoriaPiloto;
-	}
-	
-	public String getCategoriaCorrida() {
-		return categoriaCorrida;
-	}
-	
-	public void setCategoriaCorrida(String categoriaCorrida) {
-		this.categoriaCorrida = categoriaCorrida;
 	}
 	
 	public String getTipoDeLicenca() {

@@ -92,14 +92,8 @@ public class PilotoAutomotivoTest {
 
 	@Test
 	public void tesCategoriaPiloto() {
-		umPiloto.setCategoriaPiloto("Profissional");
-		assertEquals("Profissional", umPiloto.getCategoriaPiloto());
-	}
-	
-	@Test
-	public void testCategoriaCorrida(){
-		umPiloto.setCategoriaCorrida("Formula 1");
-		assertEquals("Formula 1", umPiloto.getCategoriaCorrida());
+		umPiloto.setCategoriaPiloto('P');
+		assertEquals('P', umPiloto.getCategoriaPiloto());
 	}
 	
 	@Test
