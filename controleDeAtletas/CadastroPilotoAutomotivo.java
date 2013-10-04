@@ -54,7 +54,7 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
         jTextFieldComplemento.setText(null);
         jTextFieldCpf.setText(null);
         jTextFieldDataNascimento.setText(null);
-        jTextFieldTipoDeLicenca.setText("0.0");
+        jTextFieldTipoDeLicenca.setText(null);
         jComboBoxEstado.setSelectedIndex(0);
         jTextFieldLogradouro.setText(null);
         jTextFieldNome.setText(null);
