@@ -28,7 +28,7 @@ public class CadastroHistorico extends javax.swing.JDialog {
         jButtonCancelar = new javax.swing.JButton();
         jButtonAdicionar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabelCompeticao.setText("Competicao:");
 

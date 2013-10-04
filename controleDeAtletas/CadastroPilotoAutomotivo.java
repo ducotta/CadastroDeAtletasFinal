@@ -26,10 +26,6 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
     private final char CATEGORIA_JUNIOR_VALOR = 'J';
     private final char CATEGORIA_NOVATO_VALOR = 'N';
     private final char CATEGORIA_GRADUADO_VALOR = 'G';
-    private final byte ESTILO_ORTODOXO_INDICE = 0;
-    private final byte ESTILO_SOUTHPAW_INDICE = 1;
-    private final char ESTILO_ORTODOXO_VALOR = 'O';
-    private final char ESTILO_SOUTHPAW_VALOR = 'S';
     private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     private ControlePilotoAutomotivo controlePilotoAutomotivo;
     private PilotoAutomotivo umPilotoAutomotivo;
@@ -41,7 +37,7 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
     public CadastroPilotoAutomotivo() {
         initComponents();
         this.habilitarDesabilitarCampos();
-        this.controlePilotoAutomotivo new controlePilotoAutomotivo;
+        this.controlePilotoAutomotivo = new ControlePilotoAutomotivo();
         this.historicoListModel = new DefaultListModel();
         this.jListHistorico.setModel(historicoListModel);
         this.premiacaoListModel = new DefaultListModel();
@@ -58,7 +54,7 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
         jTextFieldComplemento.setText(null);
         jTextFieldCpf.setText(null);
         jTextFieldDataNascimento.setText(null);
-        jTextFieldEnvergadura.setText("0.0");
+        jTextFieldTipoDeLicenca.setText("0.0");
         jComboBoxEstado.setSelectedIndex(0);
         jTextFieldLogradouro.setText(null);
         jTextFieldNome.setText(null);
@@ -68,22 +64,21 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
         jTextFieldPais.setText(null);
         jTextFieldPeso.setText("0.0");
         jTextFieldRg.setText(null);
-        jTextFieldTotalDerrotas.setText("0");
-        jTextFieldTotalDesistencias.setText("0");
-        jTextFieldTotalEmpates.setText("0");
-        jTextFieldTotalLutas.setText("0");
-        jTextFieldTotalNocaute.setText("0");
+        jTextFieldTotalDeBatidas.setText("0");
+        jTextFieldBatakScore.setText("0");
+        jTextFieldTotalVoltaMelhorTempo.setText("0");
+        jTextFieldTotalDeCorridas.setText("0");
+        jTextFieldTotalPolePositions.setText("0");
         jTextFieldTotalVitorias.setText("0");
         historicoListModel.clear();
         premiacaoListModel.clear();
         jComboBoxSexo.setSelectedIndex(0);
         jComboBoxCategoria.setSelectedIndex(0);
-        jComboBoxEstilo.setSelectedIndex(0);
         this.atualizarCategoriaPeso();
     }
 
     private void preencherCampos() {
-        ArrayList<Historico> historico;
+        ArrayList<String> historico;
         ArrayList<Premiacao> premiacoes;
 
         jTextFieldAltura.setText(Double.toString(umPilotoAutomotivo.getAltura()));
@@ -93,12 +88,12 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
         jTextFieldCidade.setText(umPilotoAutomotivo.getEndereco().getCidade());
         jTextFieldComplemento.setText(umPilotoAutomotivo.getEndereco().getComplemento());
         jTextFieldCpf.setText(umPilotoAutomotivo.getCpf());
-        if (umPilotoAutomotivo.getDataNascimento() == null) {
+        if (umPilotoAutomotivo.getDataDeNascimento() == null) {
             jTextFieldDataNascimento.setText(null);
         } else {
-            jTextFieldDataNascimento.setText(dateFormat.format(umPilotoAutomotivo.getDataNascimento()));
+            jTextFieldDataNascimento.setText(dateFormat.format(umPilotoAutomotivo.getDataDeNascimento()));
         }
-        jTextFieldEnvergadura.setText(Double.toString(umPilotoAutomotivo.getEnvergadura()));
+        jTextFieldTipoDeLicenca.setText(umPilotoAutomotivo.getTipoDeLicenca());
         jComboBoxEstado.setSelectedItem(umPilotoAutomotivo.getEndereco().getEstado());
         jTextFieldLogradouro.setText(umPilotoAutomotivo.getEndereco().getLogradouro());
         jTextFieldNome.setText(umPilotoAutomotivo.getNome());
@@ -108,17 +103,17 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
         jTextFieldPais.setText(umPilotoAutomotivo.getEndereco().getPais());
         jTextFieldPeso.setText(Double.toString(umPilotoAutomotivo.getPeso()));
         jTextFieldRg.setText(umPilotoAutomotivo.getRg());
-        jTextFieldTotalDerrotas.setText(Integer.toString(umPilotoAutomotivo.getTotalDerrotas()));
-        jTextFieldTotalDesistencias.setText(Integer.toString(umPilotoAutomotivo.getTotalDesistencias()));
-        jTextFieldTotalEmpates.setText(Integer.toString(umPilotoAutomotivo.getTotalEmpates()));
-        jTextFieldTotalLutas.setText(Integer.toString(umPilotoAutomotivo.getTotalLutas()));
-        jTextFieldTotalNocaute.setText(Integer.toString(umPilotoAutomotivo.getTotalVitoriasNocaute()));
+        jTextFieldTotalDeBatidas.setText(Integer.toString(umPilotoAutomotivo.getTotalDeBatidas()));
+        jTextFieldBatakScore.setText(Integer.toString(umPilotoAutomotivo.getBatakScore()));
+        jTextFieldTotalVoltaMelhorTempo.setText(Integer.toString(umPilotoAutomotivo.getTotalVoltasDeMelhorTempo()));
+        jTextFieldTotalDeCorridas.setText(Integer.toString(umPilotoAutomotivo.getTotalDeCorridas()));
+        jTextFieldTotalPolePositions.setText(Integer.toString(umPilotoAutomotivo.getTotalPolePositions()));
         jTextFieldTotalVitorias.setText(Integer.toString(umPilotoAutomotivo.getTotalVitorias()));
 
-        telefonesListModel.clear();
-        telefones = umPilotoAutomotivo.getTelefones();
-        for (String t : telefones) {
-            telefonesListModel.addElement(t);
+        historicoListModel.clear();
+        historico = umPilotoAutomotivo.getHistorico();
+        for (String hist : historico) {
+            historicoListModel.addElement(hist);
         }
 
         premiacaoListModel.clear();
@@ -136,7 +131,7 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
                 break;
         }
 
-        switch (umPilotoAutomotivo.getCategoria()) {
+        switch (umPilotoAutomotivo.getCategoriaPiloto()) {
             case CATEGORIA_AMADOR_VALOR:
                 jComboBoxCategoria.setSelectedIndex(CATEGORIA_AMADOR_INDICE);
                 break;
@@ -152,15 +147,6 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
             case CATEGORIA_GRADUADO_VALOR:
                 jComboBoxCategoria.setSelectedIndex(CATEGORIA_GRADUADO_INDICE);
                 break;       
-        }
-
-        switch (umPilotoAutomotivo.getEstilo()) {
-            case ESTILO_ORTODOXO_VALOR:
-                jComboBoxEstilo.setSelectedIndex(ESTILO_ORTODOXO_INDICE);
-                break;
-            case ESTILO_SOUTHPAW_VALOR:
-                jComboBoxEstilo.setSelectedIndex(ESTILO_SOUTHPAW_INDICE);
-                break;
         }
 
         this.atualizarCategoriaPeso();
@@ -205,45 +191,45 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
             }
         }
         try {
-            Double.parseDouble(jTextFieldEnvergadura.getText());
+            Double.parseDouble(jTextFieldTipoDeLicenca.getText());
         } catch (Exception ex) {
             this.exibirInformacao("O valor do campo 'Envergadura' é inválido.");
-            jTextFieldEnvergadura.requestFocus();
+            jTextFieldTipoDeLicenca.requestFocus();
             return false;
         }
         try {
-            Integer.parseInt(jTextFieldTotalDerrotas.getText());
+            Integer.parseInt(jTextFieldTotalDeBatidas.getText());
         } catch (Exception ex) {
             this.exibirInformacao("O valor do campo 'Total de Derrotas' é inválido.");
-            jTextFieldTotalDerrotas.requestFocus();
+            jTextFieldTotalDeBatidas.requestFocus();
             return false;
         }
         try {
-            Integer.parseInt(jTextFieldTotalDesistencias.getText());
+            Integer.parseInt(jTextFieldBatakScore.getText());
         } catch (Exception ex) {
             this.exibirInformacao("O valor do campo 'Total de Desistencias' é inválido.");
-            jTextFieldTotalDesistencias.requestFocus();
+            jTextFieldBatakScore.requestFocus();
             return false;
         }
         try {
-            Integer.parseInt(jTextFieldTotalEmpates.getText());
+            Integer.parseInt(jTextFieldTotalVoltaMelhorTempo.getText());
         } catch (Exception ex) {
             this.exibirInformacao("O valor do campo 'Total de Empates' é inválido.");
-            jTextFieldTotalEmpates.requestFocus();
+            jTextFieldTotalVoltaMelhorTempo.requestFocus();
             return false;
         }
         try {
-            Integer.parseInt(jTextFieldTotalLutas.getText());
+            Integer.parseInt(jTextFieldTotalDeCorridas.getText());
         } catch (Exception ex) {
             this.exibirInformacao("O valor do campo 'Total de Lutas' é inválido.");
-            jTextFieldTotalLutas.requestFocus();
+            jTextFieldTotalDeCorridas.requestFocus();
             return false;
         }
         try {
-            Integer.parseInt(jTextFieldTotalNocaute.getText());
+            Integer.parseInt(jTextFieldTotalPolePositions.getText());
         } catch (Exception ex) {
             this.exibirInformacao("O valor do campo 'Total de Nocautes' é inválido.");
-            jTextFieldTotalNocaute.requestFocus();
+            jTextFieldTotalPolePositions.requestFocus();
             return false;
         }
         try {
@@ -266,7 +252,7 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
         jTextFieldComplemento.setEnabled(modoAlteracao);
         jTextFieldCpf.setEnabled(modoAlteracao);
         jTextFieldDataNascimento.setEnabled(modoAlteracao);
-        jTextFieldEnvergadura.setEnabled(modoAlteracao);
+        jTextFieldTipoDeLicenca.setEnabled(modoAlteracao);
         jComboBoxEstado.setEnabled(modoAlteracao);
         jTextFieldLogradouro.setEnabled(modoAlteracao);
         jTextFieldNome.setEnabled(modoAlteracao);
@@ -276,11 +262,11 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
         jTextFieldPais.setEnabled(modoAlteracao);
         jTextFieldPeso.setEnabled(modoAlteracao);
         jTextFieldRg.setEnabled(modoAlteracao);
-        jTextFieldTotalDerrotas.setEnabled(modoAlteracao);
-        jTextFieldTotalDesistencias.setEnabled(modoAlteracao);
-        jTextFieldTotalEmpates.setEnabled(modoAlteracao);
-        jTextFieldTotalLutas.setEnabled(modoAlteracao);
-        jTextFieldTotalNocaute.setEnabled(modoAlteracao);
+        jTextFieldTotalDeBatidas.setEnabled(modoAlteracao);
+        jTextFieldBatakScore.setEnabled(modoAlteracao);
+        jTextFieldTotalVoltaMelhorTempo.setEnabled(modoAlteracao);
+        jTextFieldTotalDeCorridas.setEnabled(modoAlteracao);
+        jTextFieldTotalPolePositions.setEnabled(modoAlteracao);
         jTextFieldTotalVitorias.setEnabled(modoAlteracao);
         jButtonNovo.setEnabled(modoAlteracao == false);
         jButtonAlterar.setEnabled(modoAlteracao == false && registroSelecionado == true);
@@ -288,19 +274,18 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
         jButtonPesquisar.setEnabled(modoAlteracao == false);
         jButtonSalvar.setEnabled(modoAlteracao);
         jButtonCancelar.setEnabled(modoAlteracao);
-        jButtonAdicionarTelefone.setEnabled(modoAlteracao);
-        jButtonRemoverTelefone.setEnabled(modoAlteracao);
+        jButtonAdicionarHistorico.setEnabled(modoAlteracao);
+        jButtonRemoverHistorico.setEnabled(modoAlteracao);
         jButtonAdicionarPremiacao.setEnabled(modoAlteracao);
         jButtonRemoverPremiacao.setEnabled(modoAlteracao);
         jComboBoxSexo.setEnabled(modoAlteracao);
         jComboBoxCategoria.setEnabled(modoAlteracao);
-        jComboBoxEstilo.setEnabled(modoAlteracao);
-        jTableListaBoxeadores.setEnabled(modoAlteracao == false);
+        jTableListaPilotoAutomotivo.setEnabled(modoAlteracao == false);
     }
 
     private void salvarRegistro() {
         Endereco endereco;
-        ArrayList<String> telefones;
+        ArrayList<String> historico;
         ArrayList<Premiacao> premiacoes;
         Date dataNascimento;
 
@@ -329,9 +314,9 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
         endereco.setNumero(jTextFieldNumero.getText());
         endereco.setPais(jTextFieldPais.getText());
 
-        telefones = new ArrayList<String>();
-        for (int i = 0; i < telefonesListModel.size(); i++) {
-            telefones.add(telefonesListModel.getElementAt(i).toString());
+        historico = new ArrayList<String>();
+        for (int i = 0; i < historicoListModel.size(); i++) {
+            historico.add(historicoListModel.getElementAt(i).toString());
         }
 
         premiacoes = new ArrayList<Premiacao>();
@@ -341,26 +326,26 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
         }
 
         if (novoRegistro == true) {
-            umPilotoAutomotivo = new Boxeador(jTextFieldNome.getText());
+            umPilotoAutomotivo = new PilotoAutomotivo(jTextFieldNome.getText());
         } else {
             umPilotoAutomotivo.setNome(jTextFieldNome.getText());
         }
         umPilotoAutomotivo.setEndereco(endereco);
-        umPilotoAutomotivo.setTelefones(telefones);
+        umPilotoAutomotivo.setHistorico(historico);
         umPilotoAutomotivo.setPremiacoes(premiacoes);
-        umPilotoAutomotivo.setDataNascimento(dataNascimento);
+        umPilotoAutomotivo.setDataDeNascimento(jTextFieldDataNascimento.getText());
         umPilotoAutomotivo.setAltura(Double.parseDouble(jTextFieldAltura.getText()));
         umPilotoAutomotivo.setNomeMae(jTextFieldNomeMae.getText());
         umPilotoAutomotivo.setNomePai(jTextFieldNomePai.getText());
         umPilotoAutomotivo.setPeso(Double.parseDouble(jTextFieldPeso.getText()));
         umPilotoAutomotivo.setCpf(jTextFieldCpf.getText());
         umPilotoAutomotivo.setRg(jTextFieldRg.getText());
-        umPilotoAutomotivo.setEnvergadura(Double.parseDouble(jTextFieldEnvergadura.getText()));
-        umPilotoAutomotivo.setTotalDerrotas(Integer.parseInt(jTextFieldTotalDerrotas.getText()));
-        umPilotoAutomotivo.setTotalDesistencias(Integer.parseInt(jTextFieldTotalDesistencias.getText()));
-        umPilotoAutomotivo.setTotalEmpates(Integer.parseInt(jTextFieldTotalEmpates.getText()));
-        umPilotoAutomotivo.setTotalLutas(Integer.parseInt(jTextFieldTotalLutas.getText()));
-        umPilotoAutomotivo.setTotalVitoriasNocaute(Integer.parseInt(jTextFieldTotalNocaute.getText()));
+        umPilotoAutomotivo.setTipoDeLicenca(jTextFieldTipoDeLicenca.getText());
+        umPilotoAutomotivo.setTotalDeBatidas(Integer.parseInt(jTextFieldTotalDeBatidas.getText()));
+        umPilotoAutomotivo.setBatakScore(Integer.parseInt(jTextFieldBatakScore.getText()));
+        umPilotoAutomotivo.setTotalVoltasDeMelhorTempo(Integer.parseInt(jTextFieldTotalVoltaMelhorTempo.getText()));
+        umPilotoAutomotivo.setTotalDeCorridas(Integer.parseInt(jTextFieldTotalDeCorridas.getText()));
+        umPilotoAutomotivo.setTotalPolePositions(Integer.parseInt(jTextFieldTotalPolePositions.getText()));
         umPilotoAutomotivo.setTotalVitorias(Integer.parseInt(jTextFieldTotalVitorias.getText()));
 
         switch (jComboBoxSexo.getSelectedIndex()) {
@@ -374,34 +359,25 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
 
         switch (jComboBoxCategoria.getSelectedIndex()) {
             case CATEGORIA_AMADOR_INDICE:
-                umPilotoAutomotivo.setCategoria(CATEGORIA_AMADOR_VALOR);
+                umPilotoAutomotivo.setCategoriaPiloto(CATEGORIA_AMADOR_VALOR);
                 break;
             case CATEGORIA_PROFISSIONAL_INDICE:
-                umPilotoAutomotivo.setCategoria(CATEGORIA_PROFISSIONAL_VALOR);
+                umPilotoAutomotivo.setCategoriaPiloto(CATEGORIA_PROFISSIONAL_VALOR);
                 break;
             case CATEGORIA_NOVATO_INDICE:
-                umPilotoAutomotivo.setCategoria(CATEGORIA_NOVATO_VALOR);
+                umPilotoAutomotivo.setCategoriaPiloto(CATEGORIA_NOVATO_VALOR);
                 break;
             case CATEGORIA_JUNIOR_INDICE:
-                umPilotoAutomotivo.setCategoria(CATEGORIA_JUNIOR_VALOR);
+                umPilotoAutomotivo.setCategoriaPiloto(CATEGORIA_JUNIOR_VALOR);
                 break;
             case CATEGORIA_GRADUADO_INDICE:
-                umPilotoAutomotivo.setCategoria(CATEGORIA_GRADUADO_VALOR);
+                umPilotoAutomotivo.setCategoriaPiloto(CATEGORIA_GRADUADO_VALOR);
                 break;
             
         }
 
-        switch (jComboBoxEstilo.getSelectedIndex()) {
-            case ESTILO_ORTODOXO_INDICE:
-                umPilotoAutomotivo.setEstilo(ESTILO_ORTODOXO_VALOR);
-                break;
-            case ESTILO_SOUTHPAW_INDICE:
-                umPilotoAutomotivo.setEstilo(ESTILO_SOUTHPAW_VALOR);
-                break;
-        }
-
         if (novoRegistro == true) {
-            controleBoxeador.adicionar(umPilotoAutomotivo);
+            controlePilotoAutomotivo.adicionar(umPilotoAutomotivo);
         }
         modoAlteracao = false;
         novoRegistro = false;
@@ -410,13 +386,13 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
     }
 
     private void carregarListaBoxeadores() {
-        ArrayList<Boxeador> listaBoxeadores = controleBoxeador.getListaBoxeadores();
-        DefaultTableModel model = (DefaultTableModel) jTableListaBoxeadores.getModel();
+        ArrayList<PilotoAutomotivo> listaPilotoAutomotivos = controlePilotoAutomotivo.getListaPilotos();
+        DefaultTableModel model = (DefaultTableModel) jTableListaPilotoAutomotivo.getModel();
         model.setRowCount(0);
-        for (Boxeador b : listaBoxeadores) {
-            model.addRow(new String[]{b.getNome(), b.getCpf()});
+        for (PilotoAutomotivo piloto : listaPilotoAutomotivos) {
+            model.addRow(new String[]{piloto.getNome(), piloto.getCpf()});
         }
-        jTableListaBoxeadores.setModel(model);
+        jTableListaPilotoAutomotivo.setModel(model);
     }
 
     private void exibirInformacao(String info) {
@@ -444,7 +420,6 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
             default:
                 return;
         }
-        jTextFieldCategoriaPeso.setText(Boxeador.obterCategoriaPesoNome(categoria, Double.parseDouble(jTextFieldPeso.getText())));
     }
 
     @SuppressWarnings("unchecked")
@@ -471,14 +446,11 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
         jLabelRg = new javax.swing.JLabel();
         jLabelCpf = new javax.swing.JLabel();
         jLabelTelefones = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jListTelefones = new javax.swing.JList();
-        jButtonAdicionarTelefone = new javax.swing.JButton();
-        jButtonRemoverTelefone = new javax.swing.JButton();
         jComboBoxSexo = new javax.swing.JComboBox();
         jTextFieldDataNascimento = new javax.swing.JTextField();
         jTextFieldRg = new javax.swing.JTextField();
         jTextFieldCpf = new javax.swing.JTextField();
+        jTextFieldTelefone = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabelLogradouro = new javax.swing.JLabel();
         jTextFieldLogradouro = new javax.swing.JTextField();
@@ -496,26 +468,29 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
         jLabelCep = new javax.swing.JLabel();
         jComboBoxEstado = new javax.swing.JComboBox();
         jTextFieldCep = new javax.swing.JTextField();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jListHistorico = new javax.swing.JList();
+        jButtonAdicionarHistorico = new javax.swing.JButton();
+        jButtonRemoverHistorico = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabelCategoria = new javax.swing.JLabel();
         jComboBoxCategoria = new javax.swing.JComboBox();
         jLabelCategoriaPeso = new javax.swing.JLabel();
-        jLabelEstilo = new javax.swing.JLabel();
-        jComboBoxEstilo = new javax.swing.JComboBox();
-        jTextFieldEnvergadura = new javax.swing.JTextField();
-        jLabelEnvergadura = new javax.swing.JLabel();
-        jLabelTotalLutas = new javax.swing.JLabel();
-        jTextFieldTotalLutas = new javax.swing.JTextField();
+        jTextFieldTipoDeLicenca = new javax.swing.JTextField();
+        jLabelTipoDeLicenca = new javax.swing.JLabel();
+        jLabelTotalDeCorridas = new javax.swing.JLabel();
+        jTextFieldTotalDeCorridas = new javax.swing.JTextField();
         jTextFieldTotalVitorias = new javax.swing.JTextField();
         jLabelTotalVitorias = new javax.swing.JLabel();
-        jTextFieldTotalNocaute = new javax.swing.JTextField();
-        jLabelTotalVitoriasNocaute = new javax.swing.JLabel();
-        jTextFieldTotalEmpates = new javax.swing.JTextField();
-        jLabelTotalEmpates = new javax.swing.JLabel();
+        jTextFieldTotalPolePositions = new javax.swing.JTextField();
+        jLabelTotalPolePositions = new javax.swing.JLabel();
+        jTextFieldTotalVoltaMelhorTempo = new javax.swing.JTextField();
+        jLabelTotalVoltaMelhorTempo = new javax.swing.JLabel();
         jLabelTotalDerrotas = new javax.swing.JLabel();
-        jTextFieldTotalDerrotas = new javax.swing.JTextField();
-        jLabelTotalDesistencias = new javax.swing.JLabel();
-        jTextFieldTotalDesistencias = new javax.swing.JTextField();
+        jTextFieldTotalDeBatidas = new javax.swing.JTextField();
+        jLabelBatakScore = new javax.swing.JLabel();
+        jTextFieldBatakScore = new javax.swing.JTextField();
         jTextFieldCategoriaPeso = new javax.swing.JTextField();
         jLabelPremiacoes = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -529,7 +504,7 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
         jButtonPesquisar = new javax.swing.JButton();
         jLabelListaBoxeadores = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTableListaBoxeadores = new javax.swing.JTable();
+        jTableListaPilotoAutomotivo = new javax.swing.JTable();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -589,23 +564,6 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
 
         jLabelTelefones.setText("Telefones:");
 
-        jListTelefones.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane1.setViewportView(jListTelefones);
-
-        jButtonAdicionarTelefone.setText("+");
-        jButtonAdicionarTelefone.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAdicionarTelefoneActionPerformed(evt);
-            }
-        });
-
-        jButtonRemoverTelefone.setText("-");
-        jButtonRemoverTelefone.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRemoverTelefoneActionPerformed(evt);
-            }
-        });
-
         jComboBoxSexo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Masculino", "Feminino" }));
 
         jTextFieldDataNascimento.addActionListener(new java.awt.event.ActionListener() {
@@ -632,28 +590,26 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextFieldNome, javax.swing.GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextFieldDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelAltura)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldAltura, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabelPeso)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonAdicionarTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonRemoverTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jComboBoxSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldNomeMae, javax.swing.GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE)
                     .addComponent(jTextFieldNomePai, javax.swing.GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jTextFieldCpf, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jTextFieldRg, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jTextFieldDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabelAltura)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldAltura, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabelPeso)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jComboBoxSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jTextFieldTelefone, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jTextFieldCpf, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jTextFieldRg, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -698,15 +654,11 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelCpf)
                     .addComponent(jTextFieldCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(1, 1, 1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelTelefones)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButtonAdicionarTelefone)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonRemoverTelefone))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(94, 94, 94))
+                    .addComponent(jTextFieldTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(137, 137, 137))
         );
 
         jTabbedPane1.addTab("Informações Gerais", jPanel1);
@@ -737,13 +689,13 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelComplemento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabelPais, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
-                    .addComponent(jLabelCidade, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
-                    .addComponent(jLabelBairro, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
-                    .addComponent(jLabelNumero, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
-                    .addComponent(jLabelCep, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
-                    .addComponent(jLabelEstado, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
-                    .addComponent(jLabelLogradouro, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE))
+                    .addComponent(jLabelPais, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelCidade, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelBairro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelNumero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelCep, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelLogradouro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextFieldCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -800,6 +752,52 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Endereço", jPanel2);
 
+        jScrollPane5.setViewportView(jListHistorico);
+
+        jButtonAdicionarHistorico.setText("+");
+        jButtonAdicionarHistorico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAdicionarHistoricoActionPerformed(evt);
+            }
+        });
+
+        jButtonRemoverHistorico.setText("-");
+        jButtonRemoverHistorico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonRemoverHistoricoMouseClicked(evt);
+            }
+        });
+        jButtonRemoverHistorico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRemoverHistoricoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 662, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonAdicionarHistorico, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                    .addComponent(jButtonRemoverHistorico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 57, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane5)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(jButtonAdicionarHistorico, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonRemoverHistorico, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(255, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Historico", jPanel4);
+
         jLabelCategoria.setText("Categoria:");
 
         jComboBoxCategoria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Amador", "Profissional" }));
@@ -811,23 +809,19 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
 
         jLabelCategoriaPeso.setText("Categoria (Peso):");
 
-        jLabelEstilo.setText("Estilo:");
+        jLabelTipoDeLicenca.setText("Tipo de licenca:");
 
-        jComboBoxEstilo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Ortodoxo (destro)", "Southpaw (canhoto)" }));
-
-        jLabelEnvergadura.setText("Envergadura:");
-
-        jLabelTotalLutas.setText("Total de Lutas:");
+        jLabelTotalDeCorridas.setText("Total de Corridas:");
 
         jLabelTotalVitorias.setText("Total de Vitórias:");
 
-        jLabelTotalVitoriasNocaute.setText("Total de Vitórias por Nocaute:");
+        jLabelTotalPolePositions.setText("Total de Pole Positions:");
 
-        jLabelTotalEmpates.setText("Total de Empates:");
+        jLabelTotalVoltaMelhorTempo.setText("Total de Voltas Mais Rapida:");
 
-        jLabelTotalDerrotas.setText("Total de Derrotas:");
+        jLabelTotalDerrotas.setText("Total de Batidas:");
 
-        jLabelTotalDesistencias.setText("Total de Desistencias:");
+        jLabelBatakScore.setText("Batak Score:");
 
         jTextFieldCategoriaPeso.setEnabled(false);
 
@@ -856,28 +850,26 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelEnvergadura)
+                    .addComponent(jLabelTipoDeLicenca)
                     .addComponent(jLabelCategoria)
                     .addComponent(jLabelCategoriaPeso)
-                    .addComponent(jLabelEstilo)
-                    .addComponent(jLabelTotalLutas)
+                    .addComponent(jLabelTotalDeCorridas)
                     .addComponent(jLabelTotalVitorias)
-                    .addComponent(jLabelTotalVitoriasNocaute)
-                    .addComponent(jLabelTotalEmpates)
+                    .addComponent(jLabelTotalPolePositions)
+                    .addComponent(jLabelTotalVoltaMelhorTempo)
                     .addComponent(jLabelTotalDerrotas)
-                    .addComponent(jLabelTotalDesistencias))
+                    .addComponent(jLabelBatakScore))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldTotalDesistencias, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
-                    .addComponent(jTextFieldTotalDerrotas, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
-                    .addComponent(jTextFieldTotalEmpates, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
-                    .addComponent(jTextFieldTotalNocaute, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
-                    .addComponent(jTextFieldTotalVitorias, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
-                    .addComponent(jTextFieldTotalLutas, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
-                    .addComponent(jTextFieldEnvergadura, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
-                    .addComponent(jComboBoxEstilo, 0, 224, Short.MAX_VALUE)
-                    .addComponent(jTextFieldCategoriaPeso, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
-                    .addComponent(jComboBoxCategoria, 0, 224, Short.MAX_VALUE))
+                    .addComponent(jTextFieldBatakScore)
+                    .addComponent(jTextFieldTotalDeBatidas)
+                    .addComponent(jTextFieldTotalVoltaMelhorTempo)
+                    .addComponent(jTextFieldTotalPolePositions)
+                    .addComponent(jTextFieldTotalVitorias)
+                    .addComponent(jTextFieldTotalDeCorridas)
+                    .addComponent(jTextFieldTipoDeLicenca)
+                    .addComponent(jTextFieldCategoriaPeso)
+                    .addComponent(jComboBoxCategoria, 0, 240, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelPremiacoes)
@@ -892,7 +884,7 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -905,36 +897,32 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
                             .addComponent(jTextFieldCategoriaPeso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBoxEstilo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelEstilo))
+                            .addComponent(jLabelTipoDeLicenca)
+                            .addComponent(jTextFieldTipoDeLicenca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelEnvergadura)
-                            .addComponent(jTextFieldEnvergadura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelTotalLutas)
-                            .addComponent(jTextFieldTotalLutas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabelTotalDeCorridas)
+                            .addComponent(jTextFieldTotalDeCorridas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelTotalVitorias)
                             .addComponent(jTextFieldTotalVitorias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelTotalVitoriasNocaute)
-                            .addComponent(jTextFieldTotalNocaute, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabelTotalPolePositions)
+                            .addComponent(jTextFieldTotalPolePositions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelTotalEmpates)
-                            .addComponent(jTextFieldTotalEmpates, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabelTotalVoltaMelhorTempo)
+                            .addComponent(jTextFieldTotalVoltaMelhorTempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelTotalDerrotas)
-                            .addComponent(jTextFieldTotalDerrotas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextFieldTotalDeBatidas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelTotalDesistencias)
-                            .addComponent(jTextFieldTotalDesistencias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabelBatakScore)
+                            .addComponent(jTextFieldBatakScore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                         .addGap(46, 46, 46)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -942,8 +930,8 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
                                 .addComponent(jButtonAdicionarPremiacao)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonRemoverPremiacao))
-                            .addComponent(jScrollPane2))))
-                .addContainerGap(57, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Ficha Técnica", jPanel3);
@@ -985,7 +973,7 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
 
         jLabelListaBoxeadores.setText("Lista de Boxeadores:");
 
-        jTableListaBoxeadores.setModel(new javax.swing.table.DefaultTableModel 
+        jTableListaPilotoAutomotivo.setModel(new javax.swing.table.DefaultTableModel 
             (
                 null,
                 new String [] {
@@ -998,12 +986,12 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
                     return false;
                 }
             });
-            jTableListaBoxeadores.addMouseListener(new java.awt.event.MouseAdapter() {
+            jTableListaPilotoAutomotivo.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    jTableListaBoxeadoresMouseClicked(evt);
+                    jTableListaPilotoAutomotivoMouseClicked(evt);
                 }
             });
-            jScrollPane4.setViewportView(jTableListaBoxeadores);
+            jScrollPane4.setViewportView(jTableListaPilotoAutomotivo);
 
             javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
             getContentPane().setLayout(layout);
@@ -1028,7 +1016,7 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 761, Short.MAX_VALUE))
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.LEADING))
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             );
 
@@ -1050,8 +1038,8 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(21, Short.MAX_VALUE))
             );
 
             pack();
@@ -1103,42 +1091,27 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAlterarActionPerformed
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
-        this.controleBoxeador.remover(umPilotoAutomotivo);
+        this.controlePilotoAutomotivo.remover(umPilotoAutomotivo);
         umPilotoAutomotivo = null;
         this.limparCampos();
         this.carregarListaBoxeadores();
         this.habilitarDesabilitarCampos();
     }//GEN-LAST:event_jButtonExcluirActionPerformed
 
-private void jButtonAdicionarTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarTelefoneActionPerformed
-    CadastroTelefone cadastro = new CadastroTelefone(this, true);
-    cadastro.setVisible(true);
-    if (cadastro.getTelefone() != null) {
-        telefonesListModel.addElement(cadastro.getTelefone());
-    }
-    cadastro.dispose();
-}//GEN-LAST:event_jButtonAdicionarTelefoneActionPerformed
-
-private void jButtonRemoverTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverTelefoneActionPerformed
-    if (jListTelefones.getSelectedIndex() != -1) {
-        telefonesListModel.removeElementAt(jListTelefones.getSelectedIndex());
-    }
-}//GEN-LAST:event_jButtonRemoverTelefoneActionPerformed
-
 private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
-    String pesquisa = JOptionPane.showInputDialog("Informe o nome do Boxeador.");
+    String pesquisa = JOptionPane.showInputDialog("Informe o nome do Piloto.");
     if (pesquisa != null) {
         this.pesquisarBoxeador(pesquisa);
     }
 }//GEN-LAST:event_jButtonPesquisarActionPerformed
 
     private void pesquisarBoxeador(String nome) {
-        Boxeador boxeadorPesquisado = controleBoxeador.pesquisar(nome);
+        PilotoAutomotivo pilotoPesquisado = controlePilotoAutomotivo.pesquisar(nome);
 
-        if (boxeadorPesquisado == null) {
-            exibirInformacao("Boxeador não encontrado.");
+        if (pilotoPesquisado == null) {
+            exibirInformacao("Piloto não encontrado.");
         } else {
-            this.umPilotoAutomotivo = boxeadorPesquisado;
+            this.umPilotoAutomotivo = pilotoPesquisado;
             this.preencherCampos();
             this.habilitarDesabilitarCampos();
         }
@@ -1159,35 +1132,49 @@ private void jButtonRemoverPremiacaoActionPerformed(java.awt.event.ActionEvent e
     }
 }//GEN-LAST:event_jButtonRemoverPremiacaoActionPerformed
 
-private void jTableListaBoxeadoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableListaBoxeadoresMouseClicked
-    if (jTableListaBoxeadores.isEnabled()) {
-        DefaultTableModel model = (DefaultTableModel) jTableListaBoxeadores.getModel();
-        String nome = (String) model.getValueAt(jTableListaBoxeadores.getSelectedRow(), 0);
+private void jTableListaPilotoAutomotivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableListaPilotoAutomotivoMouseClicked
+    if (jTableListaPilotoAutomotivo.isEnabled()) {
+        DefaultTableModel model = (DefaultTableModel) jTableListaPilotoAutomotivo.getModel();
+        String nome = (String) model.getValueAt(jTableListaPilotoAutomotivo.getSelectedRow(), 0);
         this.pesquisarBoxeador(nome);
     }
-}//GEN-LAST:event_jTableListaBoxeadoresMouseClicked
+}//GEN-LAST:event_jTableListaPilotoAutomotivoMouseClicked
 
 private void jTextFieldDataNascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDataNascimentoActionPerformed
 // TODO add your handling code here:
 }//GEN-LAST:event_jTextFieldDataNascimentoActionPerformed
 
+    private void jButtonAdicionarHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarHistoricoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonAdicionarHistoricoActionPerformed
+
+    private void jButtonRemoverHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverHistoricoActionPerformed
+        if (jListHistorico.getSelectedIndex() != -1) {
+        historicoListModel.removeElementAt(jListHistorico.getSelectedIndex());
+        }    
+    }//GEN-LAST:event_jButtonRemoverHistoricoActionPerformed
+
+    private void jButtonRemoverHistoricoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonRemoverHistoricoMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonRemoverHistoricoMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAdicionarHistorico;
     private javax.swing.JButton jButtonAdicionarPremiacao;
-    private javax.swing.JButton jButtonAdicionarTelefone;
     private javax.swing.JButton jButtonAlterar;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonExcluir;
     private javax.swing.JButton jButtonNovo;
     private javax.swing.JButton jButtonPesquisar;
+    private javax.swing.JButton jButtonRemoverHistorico;
     private javax.swing.JButton jButtonRemoverPremiacao;
-    private javax.swing.JButton jButtonRemoverTelefone;
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JComboBox jComboBoxCategoria;
     private javax.swing.JComboBox jComboBoxEstado;
-    private javax.swing.JComboBox jComboBoxEstilo;
     private javax.swing.JComboBox jComboBoxSexo;
     private javax.swing.JLabel jLabelAltura;
     private javax.swing.JLabel jLabelBairro;
+    private javax.swing.JLabel jLabelBatakScore;
     private javax.swing.JLabel jLabelCategoria;
     private javax.swing.JLabel jLabelCategoriaPeso;
     private javax.swing.JLabel jLabelCep;
@@ -1195,9 +1182,7 @@ private void jTextFieldDataNascimentoActionPerformed(java.awt.event.ActionEvent 
     private javax.swing.JLabel jLabelComplemento;
     private javax.swing.JLabel jLabelCpf;
     private javax.swing.JLabel jLabelDataNascimento;
-    private javax.swing.JLabel jLabelEnvergadura;
     private javax.swing.JLabel jLabelEstado;
-    private javax.swing.JLabel jLabelEstilo;
     private javax.swing.JLabel jLabelListaBoxeadores;
     private javax.swing.JLabel jLabelLogradouro;
     private javax.swing.JLabel jLabelNome;
@@ -1210,33 +1195,34 @@ private void jTextFieldDataNascimentoActionPerformed(java.awt.event.ActionEvent 
     private javax.swing.JLabel jLabelRg;
     private javax.swing.JLabel jLabelSexo;
     private javax.swing.JLabel jLabelTelefones;
+    private javax.swing.JLabel jLabelTipoDeLicenca;
+    private javax.swing.JLabel jLabelTotalDeCorridas;
     private javax.swing.JLabel jLabelTotalDerrotas;
-    private javax.swing.JLabel jLabelTotalDesistencias;
-    private javax.swing.JLabel jLabelTotalEmpates;
-    private javax.swing.JLabel jLabelTotalLutas;
+    private javax.swing.JLabel jLabelTotalPolePositions;
     private javax.swing.JLabel jLabelTotalVitorias;
-    private javax.swing.JLabel jLabelTotalVitoriasNocaute;
+    private javax.swing.JLabel jLabelTotalVoltaMelhorTempo;
+    private javax.swing.JList jListHistorico;
     private javax.swing.JList jListPremiacoes;
-    private javax.swing.JList jListTelefones;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTableListaBoxeadores;
+    private javax.swing.JTable jTableListaPilotoAutomotivo;
     private javax.swing.JTextField jTextFieldAltura;
     private javax.swing.JTextField jTextFieldBairro;
+    private javax.swing.JTextField jTextFieldBatakScore;
     private javax.swing.JTextField jTextFieldCategoriaPeso;
     private javax.swing.JTextField jTextFieldCep;
     private javax.swing.JTextField jTextFieldCidade;
     private javax.swing.JTextField jTextFieldComplemento;
     private javax.swing.JTextField jTextFieldCpf;
     private javax.swing.JTextField jTextFieldDataNascimento;
-    private javax.swing.JTextField jTextFieldEnvergadura;
     private javax.swing.JTextField jTextFieldLogradouro;
     private javax.swing.JTextField jTextFieldNome;
     private javax.swing.JTextField jTextFieldNomeMae;
@@ -1245,11 +1231,12 @@ private void jTextFieldDataNascimentoActionPerformed(java.awt.event.ActionEvent 
     private javax.swing.JTextField jTextFieldPais;
     private javax.swing.JTextField jTextFieldPeso;
     private javax.swing.JTextField jTextFieldRg;
-    private javax.swing.JTextField jTextFieldTotalDerrotas;
-    private javax.swing.JTextField jTextFieldTotalDesistencias;
-    private javax.swing.JTextField jTextFieldTotalEmpates;
-    private javax.swing.JTextField jTextFieldTotalLutas;
-    private javax.swing.JTextField jTextFieldTotalNocaute;
+    private javax.swing.JTextField jTextFieldTelefone;
+    private javax.swing.JTextField jTextFieldTipoDeLicenca;
+    private javax.swing.JTextField jTextFieldTotalDeBatidas;
+    private javax.swing.JTextField jTextFieldTotalDeCorridas;
+    private javax.swing.JTextField jTextFieldTotalPolePositions;
     private javax.swing.JTextField jTextFieldTotalVitorias;
+    private javax.swing.JTextField jTextFieldTotalVoltaMelhorTempo;
     // End of variables declaration//GEN-END:variables
 }

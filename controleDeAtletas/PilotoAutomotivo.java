@@ -7,7 +7,7 @@ public class PilotoAutomotivo extends Atleta {
 	private char categoriaPiloto; // J=Junior N=Novato G=Graduado A=Amador P=Proficional
 	private String tipoDeLicenca;
 	private int anosDeExperiencia;
-	private ArrayList<Historico> historico;
+	private ArrayList<String> historico;
 	private ArrayList<Premiacao> premiacoes;
 	private int totalDeCorridas;
 	private int totalVitorias;
@@ -44,11 +44,11 @@ public class PilotoAutomotivo extends Atleta {
 		this.anosDeExperiencia = anosDeExperiencia;
 	}
 	
-	public ArrayList<Historico> getHistorico() {
+	public ArrayList<String> getHistorico() {
 		return historico;
 	}
 	
-	public void setHistorico(ArrayList<Historico> historico) {
+	public void setHistorico(ArrayList<String> historico) {
 		this.historico = historico;
 	}
 	
