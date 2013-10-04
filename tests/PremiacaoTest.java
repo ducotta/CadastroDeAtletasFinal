@@ -22,8 +22,8 @@ public class PremiacaoTest {
 	}
 	
 	@Test 
-	public void testCategoriaCorrida(){
-		assertEquals("Rally dos Sertoes", umaPremiacao.getCategoriaCorrida());
+	public void testCompeticao(){
+		assertEquals("Rally dos Sertoes", umaPremiacao.getCompeticao());
 	}
 	
 	@Test

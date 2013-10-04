@@ -22,8 +22,8 @@ public class HistoricoTest {
 	}
 	
 	@Test
-	public void testCategoriaCorrida() {
-		assertEquals("Nascar", umHistorico.getCategoriaCorrida());
+	public void testCompeticao() {
+		assertEquals("Nascar", umHistorico.getCompeticao());
 	}
 	
 	@Test 
