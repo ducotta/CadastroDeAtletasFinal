@@ -16,7 +16,7 @@ public class PilotoAutomotivoTest {
 
 	PilotoAutomotivo umPiloto;
 	private Endereco umEndereco;
-	private ArrayList<Historico> umHistorico;
+	private ArrayList<String> umHistorico;
 	private ArrayList<Premiacao> premiacoes;
 	
 	@Before
