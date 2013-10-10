@@ -89,6 +89,12 @@ public class PilotoAutomotivoTest {
 		umPiloto.setCpf("000.000.000-00");
 		assertEquals("000.000.000-00", umPiloto.getCpf());
 	}
+	
+	@Test
+	public void testEquipe(){
+		umPiloto.setEquipe("Lotus");
+		assertEquals("Lotus", umPiloto.getEquipe());
+	}
 
 	@Test
 	public void tesCategoriaPiloto() {

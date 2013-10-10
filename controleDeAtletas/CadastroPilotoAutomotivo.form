@@ -587,13 +587,13 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabelTipoDeLicenca" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabelCategoria" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabelCategoriaPeso" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabelTotalDeCorridas" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabelTotalVitorias" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabelTotalPolePositions" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabelTotalVoltaMelhorTempo" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabelTotalDerrotas" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabelBatakScore" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelEquipe" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -604,8 +604,8 @@
                           <Component id="jTextFieldTotalVitorias" alignment="0" max="32767" attributes="1"/>
                           <Component id="jTextFieldTotalDeCorridas" alignment="0" max="32767" attributes="1"/>
                           <Component id="jTextFieldTipoDeLicenca" alignment="0" max="32767" attributes="1"/>
-                          <Component id="jTextFieldCategoriaPeso" alignment="0" max="32767" attributes="1"/>
                           <Component id="jComboBoxCategoria" alignment="0" pref="240" max="32767" attributes="1"/>
+                          <Component id="jTextFieldEquipe" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -626,18 +626,19 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jComboBoxCategoria" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabelCategoria" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabelPremiacoes" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabelEquipe" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                                  <Component id="jTextFieldEquipe" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabelCategoriaPeso" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jTextFieldCategoriaPeso" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jComboBoxCategoria" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabelCategoria" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -676,18 +677,13 @@
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jButtonAdicionarPremiacao" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jButtonRemoverPremiacao" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="jScrollPane2" alignment="0" min="-2" pref="318" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="jButtonAdicionarPremiacao" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jButtonRemoverPremiacao" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="jScrollPane2" alignment="0" min="-2" pref="318" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="17" max="32767" attributes="0"/>
+                      <EmptySpace pref="15" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -710,11 +706,6 @@
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JComboBox()"/>
               </AuxValues>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabelCategoriaPeso">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Categoria (Peso):"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextFieldTipoDeLicenca">
             </Component>
@@ -765,11 +756,6 @@
             </Component>
             <Component class="javax.swing.JTextField" name="jTextFieldBatakScore">
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextFieldCategoriaPeso">
-              <Properties>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JLabel" name="jLabelPremiacoes">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Premia&#xe7;&#xf5;es:"/>
@@ -805,6 +791,16 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonRemoverPremiacaoActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabelEquipe">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Equipe:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextFieldEquipe">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldEquipeActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

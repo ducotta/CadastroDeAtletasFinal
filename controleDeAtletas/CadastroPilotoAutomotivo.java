@@ -48,13 +48,13 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
     private void limparCampos() {
         jTextFieldAltura.setText("0.0");
         jTextFieldBairro.setText(null);
-        jTextFieldCategoriaPeso.setText(null);
         jTextFieldCep.setText(null);
         jTextFieldCidade.setText(null);
         jTextFieldComplemento.setText(null);
         jTextFieldCpf.setText(null);
         jTextFieldDataNascimento.setText(null);
         jTextFieldTipoDeLicenca.setText(null);
+        jTextFieldEquipe.setText(null);
         jComboBoxEstado.setSelectedIndex(0);
         jTextFieldLogradouro.setText(null);
         jTextFieldNome.setText(null);
@@ -74,7 +74,7 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
         premiacaoListModel.clear();
         jComboBoxSexo.setSelectedIndex(0);
         jComboBoxCategoria.setSelectedIndex(0);
-        this.atualizarCategoriaPeso();
+       
     }
 
     private void preencherCampos() {
@@ -83,7 +83,6 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
 
         jTextFieldAltura.setText(Double.toString(umPilotoAutomotivo.getAltura()));
         jTextFieldBairro.setText(umPilotoAutomotivo.getEndereco().getBairro());
-        jTextFieldCategoriaPeso.setText(Double.toString(umPilotoAutomotivo.getPeso()));
         jTextFieldCep.setText(umPilotoAutomotivo.getEndereco().getCep());
         jTextFieldCidade.setText(umPilotoAutomotivo.getEndereco().getCidade());
         jTextFieldComplemento.setText(umPilotoAutomotivo.getEndereco().getComplemento());
@@ -93,6 +92,7 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
         } else {
             jTextFieldDataNascimento.setText(dateFormat.format(umPilotoAutomotivo.getDataDeNascimento()));
         }
+        jTextFieldEquipe.setText(umPilotoAutomotivo.getEquipe());
         jTextFieldTipoDeLicenca.setText(umPilotoAutomotivo.getTipoDeLicenca());
         jComboBoxEstado.setSelectedItem(umPilotoAutomotivo.getEndereco().getEstado());
         jTextFieldLogradouro.setText(umPilotoAutomotivo.getEndereco().getLogradouro());
@@ -149,7 +149,7 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
                 break;       
         }
 
-        this.atualizarCategoriaPeso();
+        
     }
 
     private boolean validarCampos() {
@@ -240,12 +240,12 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
         boolean registroSelecionado = (umPilotoAutomotivo != null);
         jTextFieldAltura.setEnabled(modoAlteracao);
         jTextFieldBairro.setEnabled(modoAlteracao);
-        jTextFieldCategoriaPeso.setEnabled(false);
         jTextFieldCep.setEnabled(modoAlteracao);
         jTextFieldCidade.setEnabled(modoAlteracao);
         jTextFieldComplemento.setEnabled(modoAlteracao);
         jTextFieldCpf.setEnabled(modoAlteracao);
         jTextFieldDataNascimento.setEnabled(modoAlteracao);
+        jTextFieldEquipe.setEnabled(modoAlteracao);
         jTextFieldTipoDeLicenca.setEnabled(modoAlteracao);
         jComboBoxEstado.setEnabled(modoAlteracao);
         jTextFieldLogradouro.setEnabled(modoAlteracao);
@@ -334,6 +334,7 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
         umPilotoAutomotivo.setPeso(Double.parseDouble(jTextFieldPeso.getText()));
         umPilotoAutomotivo.setCpf(jTextFieldCpf.getText());
         umPilotoAutomotivo.setRg(jTextFieldRg.getText());
+        umPilotoAutomotivo.setEquipe(jTextFieldEquipe.getText());
         umPilotoAutomotivo.setTipoDeLicenca(jTextFieldTipoDeLicenca.getText());
         umPilotoAutomotivo.setTotalDeBatidas(Integer.parseInt(jTextFieldTotalDeBatidas.getText()));
         umPilotoAutomotivo.setBatakScore(Integer.parseInt(jTextFieldBatakScore.getText()));
@@ -393,28 +394,8 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, info, "Atenção", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    private void atualizarCategoriaPeso() {
-        char categoria;
-        switch (jComboBoxCategoria.getSelectedIndex()) {
-            case CATEGORIA_AMADOR_INDICE:
-                categoria = CATEGORIA_AMADOR_VALOR;
-                break;
-            case CATEGORIA_PROFISSIONAL_INDICE:
-                categoria = CATEGORIA_PROFISSIONAL_VALOR;
-                break;
-            case CATEGORIA_NOVATO_INDICE:
-                categoria = CATEGORIA_NOVATO_VALOR;
-                break;
-            case CATEGORIA_JUNIOR_INDICE:
-                categoria = CATEGORIA_JUNIOR_VALOR;
-                break;
-            case CATEGORIA_GRADUADO_INDICE:
-                categoria = CATEGORIA_GRADUADO_VALOR;
-                break;
-            default:
-                return;
-        }
-    }
+    
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -470,7 +451,6 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabelCategoria = new javax.swing.JLabel();
         jComboBoxCategoria = new javax.swing.JComboBox();
-        jLabelCategoriaPeso = new javax.swing.JLabel();
         jTextFieldTipoDeLicenca = new javax.swing.JTextField();
         jLabelTipoDeLicenca = new javax.swing.JLabel();
         jLabelTotalDeCorridas = new javax.swing.JLabel();
@@ -485,12 +465,13 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
         jTextFieldTotalDeBatidas = new javax.swing.JTextField();
         jLabelBatakScore = new javax.swing.JLabel();
         jTextFieldBatakScore = new javax.swing.JTextField();
-        jTextFieldCategoriaPeso = new javax.swing.JTextField();
         jLabelPremiacoes = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jListPremiacoes = new javax.swing.JList();
         jButtonAdicionarPremiacao = new javax.swing.JButton();
         jButtonRemoverPremiacao = new javax.swing.JButton();
+        jLabelEquipe = new javax.swing.JLabel();
+        jTextFieldEquipe = new javax.swing.JTextField();
         jButtonAlterar = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
         jButtonExcluir = new javax.swing.JButton();
@@ -801,8 +782,6 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
             }
         });
 
-        jLabelCategoriaPeso.setText("Categoria (Peso):");
-
         jLabelTipoDeLicenca.setText("Tipo de licenca:");
 
         jLabelTotalDeCorridas.setText("Total de Corridas:");
@@ -816,8 +795,6 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
         jLabelTotalDerrotas.setText("Total de Batidas:");
 
         jLabelBatakScore.setText("Batak Score:");
-
-        jTextFieldCategoriaPeso.setEnabled(false);
 
         jLabelPremiacoes.setText("Premiações:");
 
@@ -837,6 +814,14 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
             }
         });
 
+        jLabelEquipe.setText("Equipe:");
+
+        jTextFieldEquipe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldEquipeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -846,13 +831,13 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelTipoDeLicenca)
                     .addComponent(jLabelCategoria)
-                    .addComponent(jLabelCategoriaPeso)
                     .addComponent(jLabelTotalDeCorridas)
                     .addComponent(jLabelTotalVitorias)
                     .addComponent(jLabelTotalPolePositions)
                     .addComponent(jLabelTotalVoltaMelhorTempo)
                     .addComponent(jLabelTotalDerrotas)
-                    .addComponent(jLabelBatakScore))
+                    .addComponent(jLabelBatakScore)
+                    .addComponent(jLabelEquipe))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextFieldBatakScore)
@@ -862,8 +847,8 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
                     .addComponent(jTextFieldTotalVitorias)
                     .addComponent(jTextFieldTotalDeCorridas)
                     .addComponent(jTextFieldTipoDeLicenca)
-                    .addComponent(jTextFieldCategoriaPeso)
-                    .addComponent(jComboBoxCategoria, 0, 240, Short.MAX_VALUE))
+                    .addComponent(jComboBoxCategoria, 0, 240, Short.MAX_VALUE)
+                    .addComponent(jTextFieldEquipe))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelPremiacoes)
@@ -878,17 +863,18 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(46, 46, 46)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBoxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelCategoria)
-                            .addComponent(jLabelPremiacoes))
+                            .addComponent(jLabelPremiacoes)
+                            .addComponent(jLabelEquipe, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldEquipe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelCategoriaPeso)
-                            .addComponent(jTextFieldCategoriaPeso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jComboBoxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelCategoria))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelTipoDeLicenca)
@@ -918,14 +904,11 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
                             .addComponent(jLabelBatakScore)
                             .addComponent(jTextFieldBatakScore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jButtonAdicionarPremiacao)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonRemoverPremiacao))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(17, Short.MAX_VALUE))
+                        .addComponent(jButtonAdicionarPremiacao)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonRemoverPremiacao))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Ficha Técnica", jPanel3);
@@ -1040,7 +1023,7 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
         }// </editor-fold>//GEN-END:initComponents
 
     private void jComboBoxCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCategoriaActionPerformed
-        this.atualizarCategoriaPeso();
+        
     }//GEN-LAST:event_jComboBoxCategoriaActionPerformed
 
     private void jButtonNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoActionPerformed
@@ -1074,7 +1057,7 @@ public class CadastroPilotoAutomotivo extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldPesoPropertyChange
 
     private void jTextFieldPesoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldPesoFocusLost
-        this.atualizarCategoriaPeso();
+       
     }//GEN-LAST:event_jTextFieldPesoFocusLost
 
     private void jButtonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarActionPerformed
@@ -1157,6 +1140,10 @@ private void jTextFieldDataNascimentoActionPerformed(java.awt.event.ActionEvent 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonRemoverHistoricoMouseClicked
 
+    private void jTextFieldEquipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldEquipeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldEquipeActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdicionarHistorico;
     private javax.swing.JButton jButtonAdicionarPremiacao;
@@ -1175,12 +1162,12 @@ private void jTextFieldDataNascimentoActionPerformed(java.awt.event.ActionEvent 
     private javax.swing.JLabel jLabelBairro;
     private javax.swing.JLabel jLabelBatakScore;
     private javax.swing.JLabel jLabelCategoria;
-    private javax.swing.JLabel jLabelCategoriaPeso;
     private javax.swing.JLabel jLabelCep;
     private javax.swing.JLabel jLabelCidade;
     private javax.swing.JLabel jLabelComplemento;
     private javax.swing.JLabel jLabelCpf;
     private javax.swing.JLabel jLabelDataNascimento;
+    private javax.swing.JLabel jLabelEquipe;
     private javax.swing.JLabel jLabelEstado;
     private javax.swing.JLabel jLabelListaBoxeadores;
     private javax.swing.JLabel jLabelLogradouro;
@@ -1216,12 +1203,12 @@ private void jTextFieldDataNascimentoActionPerformed(java.awt.event.ActionEvent 
     private javax.swing.JTextField jTextFieldAltura;
     private javax.swing.JTextField jTextFieldBairro;
     private javax.swing.JTextField jTextFieldBatakScore;
-    private javax.swing.JTextField jTextFieldCategoriaPeso;
     private javax.swing.JTextField jTextFieldCep;
     private javax.swing.JTextField jTextFieldCidade;
     private javax.swing.JTextField jTextFieldComplemento;
     private javax.swing.JTextField jTextFieldCpf;
     private javax.swing.JTextField jTextFieldDataNascimento;
+    private javax.swing.JTextField jTextFieldEquipe;
     private javax.swing.JTextField jTextFieldLogradouro;
     private javax.swing.JTextField jTextFieldNome;
     private javax.swing.JTextField jTextFieldNomeMae;
